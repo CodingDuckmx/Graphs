@@ -1,6 +1,9 @@
 """
 Simple graph implementation
 """
+
+import random
+
 from util import Stack, Queue  # These may come in handy
 
 class Graph:
@@ -105,7 +108,6 @@ class Graph:
 
         return visited
 
-
     def dft_recursive(self, starting_vertex,visited = []):
         """
         Print each vertex in depth-first order
@@ -199,23 +201,6 @@ class Graph:
         This should be done using recursion.
         """
 
-        # visited.append(starting_vertex)
-
-        # if starting_vertex == destination_vertex:
-
-        #     return path + [starting_vertex]
-        
-        # if self.get_neighbors(starting_vertex):
-
-        #     for vertex in self.get_neighbors(starting_vertex):
-
-        #         if vertex not in visited:
-
-        #             if self.dfs_recursive(vertex,destination_vertex,visited,path + [starting_vertex]):
-
-        #                 return self.dfs_recursive(vertex,destination_vertex,visited,path + [starting_vertex])
-
-        # return None
         visited.append(starting_vertex)
         if starting_vertex == destination_vertex:
             return path + [starting_vertex]
@@ -225,7 +210,67 @@ class Graph:
                 path_found = self.dfs_recursive(vertex, destination_vertex, visited, path + [starting_vertex])
                 if path_found is not None:
                     return path_found
-        
+
+    def dft_modified(self, starting_vertex):
+        """
+        Print each vertex in depth-first order
+        beginning from starting_vertex.
+        """
+
+        stack = Stack()
+        visited = []
+
+        stack.push(starting_vertex)
+
+        while stack.size() > 0:
+
+            current = stack.pop()
+
+            if current not in visited:
+
+                visited.append(current)
+
+                neighbors = [(len(self.get_neighbors(vertex)),vertex) for vertex in self.get_neighbors(current)]
+
+                for _, vertex in [pair for pair in sorted(neighbors)]:
+
+                    stack.push(vertex)
+
+
+
+        return visited
+
+    def dft_randomized(self, starting_vertex):
+        """
+        Print each vertex in depth-first order
+        beginning from starting_vertex.
+        """
+
+        stack = Stack()
+        visited = []
+
+        stack.push(starting_vertex)
+
+        while stack.size() > 0:
+
+            current = stack.pop()
+
+            if current not in visited:
+
+                visited.append(current)
+
+                neighbors = [vertex for vertex in self.get_neighbors(current)]
+
+                random.shuffle(neighbors)
+
+                for vertex in neighbors:
+
+                    stack.push(vertex)
+
+
+
+        return visited
+
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph

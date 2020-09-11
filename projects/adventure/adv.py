@@ -47,7 +47,7 @@ for room in world.rooms:
 
         graph.add_edge(room,world.rooms[room].e_to.id)
 
-order_of_visits = graph.dft(0)
+order_of_visits = graph.dft_modified(0)
 
 print('$$$$$$$$$$$$$$$$$$')
 print(order_of_visits)
